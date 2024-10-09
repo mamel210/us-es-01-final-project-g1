@@ -15,6 +15,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const response = await fetch(uri, options)
 				if (!response.ok) {
 					console.log("Error loading message from backend", response.status)
+					return
 				}
 				const data = await response.json()
 				setStore({ message: data.message })
