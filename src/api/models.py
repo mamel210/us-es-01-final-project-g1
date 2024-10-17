@@ -10,6 +10,7 @@ class Users(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
     is_active = db.Column(db.Boolean, unique=False, nullable=False)
+    is_admin = db.Column(db.Boolean, unique=False, nullable=False)
     name = db.Column(db.String(80), unique=False, nullable=False)
     age = db.Column(db.Integer, unique=False, nullable=False)
     weight = db.Column(db.Float, unique=False, nullable=False)
@@ -24,6 +25,7 @@ class Users(db.Model):
         return {'id': self.id,
                 'email': self.email,
                 'is_active': self.is_active,
+                'is_admin': self.is_admin,
                 'name': self.name,
                 'age': self.age,
                 'weight': self.weight,
