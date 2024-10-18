@@ -116,6 +116,17 @@ def sessions():
         return response_body, 200
     if request.method == 'POST':
         data = request.json
+        plan = data.get('training_plan_id', None)
+        if not plan: 
+            response_body['message'] = 'Faltan datos en el request (training_plan_id)'
+            return response_body, 400
+        row = db.session.execute(db.select(TrainingPlans).where(TrainingPlans.id == plan))
+        if not row:
+            response_body['message'] = 'El Plan no existe'
+            return response_body, 400
+        if row.user_id != current_user['user_id']:
+            response_body['message'] = 'Sin Autorizacion'
+            return response_body, 401
         row = Sessions(date=data.get('date'),
                        duration_minutes=data.get('duration_minutes'),
                        training_plan_id=data.get('training_plan_id'))
