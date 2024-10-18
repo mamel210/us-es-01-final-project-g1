@@ -143,3 +143,59 @@ class SessionExercises(db.Model):
                 'is_done': self.is_done,
                 'session_id': self.session_id,
                 'exercise_id': self.exercise_id}
+
+
+class MuscleExercises(db.Model):
+    __tablename__= 'muscle_exercises'   
+    id = db.Column(db.Integer, primary_key=True)
+    exercise_id = db.Column(db.Integer, db.ForeignKey('exercises.id'), nullable=False)
+    exercise_to = db.relationship('Exercises', foreign_keys=[exercise_id], backref=db.backref('muscle_exercises', lazy='select'))
+
+    def __repr__(self):
+        return f'<MuscleExercise {self.id} - exercise {self.exercise_id}>'
+
+    def serialize(self):
+        return {'id': self.id,
+               'exercise_id': self.exercise_id}
+
+
+class Categories(db.Model):
+    __tablename__= 'categories'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), unique=False, nullable=False)
+
+    def __repr__(self):
+        return f'<Categorie {self.id} - {self.name}'
+
+    def serialize(self):
+        return {'id': self.id,
+                'name': self.name}
+
+
+class Muscles(db.Model):
+    __tablename__= 'muscles'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), unique=True, nullable=False)
+    name_en = db.Column(db.String(50), unique=True, nullable=False)
+    is_front = db.Column(db.Boolean, default=False, nullable=False)
+    image_url_main = db.Column(db.String(), unique=True, nullable=False)
+    image_url_secondary = db.Column(db.String(), unique=True, nullable=False)
+
+    def __repr__(self):
+        return f'<Muscle {self.id} - {self.name} - {self.name_en}'
+
+    def serialize(self):
+        return {'id': self.id,
+           'name': self.name,
+           'name_en': self.name_en,
+           'is_front': self.is_front,
+           'image_url_main': self.image_url_main,
+           'image_url_secondary': self.image_url_secondary}
+           
+
+
+
+
+
+
+
