@@ -50,8 +50,6 @@ def training_plans():
     if request.method == 'POST':
         data = request.json
         row = TrainingPlans(name=data.get('name'),
-                            duration_minutes=data.get('duration_minutes'),
-                            burn_calories=data.get('burn_calories'),
                             level=data.get('level'),
                             registration_date=data.get('registration_date'),
                             finalization_date=data.get('finalization_date'),
@@ -85,8 +83,6 @@ def training_plan(id):
     if request.method == 'PUT':
         data = request.json
         row.name = data.get('name')
-        row.duration_minutes = data.get('duration_minutes')
-        row.burn_calories = data.get('burn_calories')
         row.level = data.get('level')
         row.registration_date = data.get('registration_date')
         row.finalization_date = data.get('finalization_date')
@@ -128,7 +124,6 @@ def sessions():
             response_body['message'] = 'Sin Autorizacion'
             return response_body, 401
         row = Sessions(date=data.get('date'),
-                       duration_minutes=data.get('duration_minutes'),
                        training_plan_id=data.get('training_plan_id'))
         db.session.add(row)
         db.session.commit()
@@ -171,8 +166,6 @@ def session_exercises():
                                exercise_id=data.get('exercise_id'),
                                repetitions=data.get('repetitions'),
                                series=data.get('series'),
-                               duration_minutes=data.get('duration_minutes'),
-                               resting_time=data.get('resting_time'),
                                is_done=data.get('is_done'))
         db.session.add(row)
         db.session.commit()
@@ -195,9 +188,7 @@ def training_exercises():
         data = request.json
         row = TrainingExercises(training_plan_id=data.get('training_plan_id'),
                                 exercise_id=data.get('exercise_id'),
-                                duration_minutes=data.get('duration_minutes'),
                                 repetitions=data.get('repetitions'),
-                                resting_time=data.get('resting_time'),
                                 series=data.get('series'))
         db.session.add(row)
         db.session.commit()
