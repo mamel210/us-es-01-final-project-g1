@@ -37,9 +37,9 @@ class Users(db.Model):
 class Exercises(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=True, nullable=False)
-    description = db.Column(db.string(100), unique=False, nullable=False)
-    muscle = db.Column(db.string(), unique=True, nullable=False)
-    exercise_base = db.Column(db.string(), unique=True, nullable=False) 
+    description = db.Column(db.String(100), unique=False, nullable=False)
+    muscle = db.Column(db.String(), unique=True, nullable=False)
+    exercise_base = db.Column(db.String(), unique=True, nullable=False) 
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'), nullable=False)
     category_to = db.relationship('Categories', foreign_keys=[category_id], backref=db.backref('exercises', lazy='select'))
 
