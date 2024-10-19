@@ -37,13 +37,22 @@ class Users(db.Model):
 class Exercises(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=True, nullable=False)
+    description = db.Column(db.string(100), unique=False, nullable=False)
+    muscle = db.Column(db.string(), unique=True, nullable=False)
+    exercise_base = db.Column(db.string(), unique=True, nullable=False) 
+    category_id = db.Column(db.Integer, db.ForeignKey('categories.id'), nullable=False)
+    category_to = db.relationship('Categories', foreign_keys=[category_id], backref=db.backref('exercises', lazy='select'))
 
     def __repr__(self):
-        return f'<Exercise {self.id} - {self.name}>'
+        return f'<Exercise {self.id} - {self.name} - category {self.category_id}>'
 
     def serialize(self):
         return {'id': self.id,
-                'name': self.name}
+                'name': self.name,
+                'description': self.description,
+                'muscle': self.muscle,
+                'exercise_base': self.exercise_base,
+                'category_id': self.category_id}
     
 
 class TrainingPlans(db.Model):
@@ -135,14 +144,17 @@ class MuscleExercises(db.Model):
     __tablename__= 'muscle_exercises'   
     id = db.Column(db.Integer, primary_key=True)
     exercise_id = db.Column(db.Integer, db.ForeignKey('exercises.id'), nullable=False)
-    exercise_to = db.relationship('Exercises', foreign_keys=[exercise_id], backref=db.backref('muscle_exercises', lazy='select'))
+    exercise_to = db.relationship('Exercises', foreign_keys=[exercise_id], backref=db.backref('muscles', lazy='select'))
+    muscle_id = db.Column(db.Integer, db.ForeignKey('muscles.id'), nullable=False)
+    muscle_to = db.relationship('Muscles', foreign_keys=[muscle_id], backref=db.backref('exercises', lazy='select'))
 
     def __repr__(self):
-        return f'<MuscleExercise {self.id} - exercise {self.exercise_id}>'
+        return f'<MuscleExercise {self.id} - exercise {self.exercise_id} - muscle {self.muscle_id}>'
 
     def serialize(self):
         return {'id': self.id,
-               'exercise_id': self.exercise_id}
+               'exercise_id': self.exercise_id,
+               'muscle_id': self.muscle_id}
 
 
 class Categories(db.Model):
@@ -178,10 +190,3 @@ class Muscles(db.Model):
            'image_url_main': self.image_url_main,
            'image_url_secondary': self.image_url_secondary}
            
-
-
-
-
-
-
-
