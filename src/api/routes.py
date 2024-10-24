@@ -36,6 +36,33 @@ def login():
     response_body['results'] = user.serialize()
     return response_body, 200
 
+@api.route("/register", methods=["POST"])
+def register():
+    response_body = {}
+    data = request.json
+    email = request.json.get("email", None)
+    row = db.session.execute(db.select(Users).where(Users.email == email)).scalar()
+    if row: 
+        response_body['message'] = "El email ya esta registrado"
+        return jsonify(response_body), 404
+    user = Users(email = data.get("email"),
+                password = data.get("password"),
+                is_active = True,
+                is_admin = False,
+                name = data.get("name"),
+                age = data.get("age"),
+                weight = data.get("weight"),
+                height = data.get("height"),
+                target_weight = data.get("target_weight"))   
+    db.session.add(user)
+    db.session.commit()
+    access_token = create_access_token(identity={"email": user.email, 'user_id': user.id, "is_admin": user.is_admin})
+    response_body['message'] = f'Usuario {email} Registrado con éxito'
+    response_body['access_token'] = access_token
+    response_body['results'] = user.serialize()
+    return jsonify(response_body), 200
+
+
 @api.route('/training-plans', methods=['GET', 'POST'])
 @jwt_required()
 def training_plans():

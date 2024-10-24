@@ -48,10 +48,26 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return
 				}
 			},
-			register: (formdata) => {
-				console.log(formdata);
+			 register: async (formdata) => {
+				const uri = `${process.env.BACKEND_URL}/api/register`
+				console.log(uri);
 
-				return formdata
+				const options = {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify(formdata),
+				};
+				const response = await fetch(uri, options);
+				console.log(response);
+
+
+				if (!response.ok) {
+					return
+				}
+				const data = await response.json()
+				// TODO: GUARDAR EL ACCESS TOKEN, ETC, ETC, IGUAL QUE EN EL LOGIN
 			},
 		}
 	};

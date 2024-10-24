@@ -12,8 +12,12 @@ export const Register = () => {
     const [weight, setWeight] = useState('')
     const [height, setHeight] = useState('')
     const [targetWeight, setTargetWeight] = useState('')
-    const handleRegister = () => {
-        actions.register("mamel")
+    const handleRegister = (e) => {
+        e.preventDefault()
+        const data = {
+            email, password, name, age, weight, height, "target_weight": targetWeight
+        }
+        actions.register(data)
     }
     return (
         <FormLayout title={'Registrate'} onSubmit={handleRegister} actionText={'Registrar'}>
