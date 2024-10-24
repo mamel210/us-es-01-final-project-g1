@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
-import { Context } from "../store/appContext";
+import { Context } from "../store/appContext.js";
 import { Link } from "react-router-dom";
-import { FormLayout } from "./FormLayout.jsx";
+import { FormLayout } from "../component/FormLayout.jsx";
 
 export const Register = () => {
     const { store, actions } = useContext(Context)

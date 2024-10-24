@@ -3,9 +3,11 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import injectContext from "./store/appContext";
 // Custom components
 // Custom pages / views
-import { Register } from "./component/Register.jsx";
+
+import { Login } from "./pages/Login.jsx";
+import { Register } from "./pages/Register.jsx";
 import { Dashboard } from "./pages/Dashboard.jsx";
-import { Login } from "./component/Login.jsx";
+
 
 
 
@@ -16,16 +18,14 @@ const Layout = () => {
     const basename = process.env.BASENAME || "";
 
     return (
-        <div>
-            <BrowserRouter basename={basename}>
-                <Routes>
-                    <Route element={<Dashboard />} path="/" />
-                    <Route element={<Login />} path="/login" />
-                    <Route element={<Register />} path="/register" />
-                    <Route element={<h1>Not found!</h1>} path="*" />
-                </Routes>
-            </BrowserRouter>
-        </div>
+        <BrowserRouter basename={basename}>
+            <Routes>
+                <Route element={<Dashboard />} path="/" />
+                <Route element={<Login />} path="/login" />
+                <Route element={<Register />} path="/register" />
+                <Route element={<h1>Not found!</h1>} path="*" />
+            </Routes>
+        </BrowserRouter>
     );
 };
 

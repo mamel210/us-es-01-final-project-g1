@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react"
-import { Context } from "../store/appContext";
-import { FormLayout } from "./FormLayout.jsx";
+import { Context } from "../store/appContext.js";
+import { FormLayout } from "../component/FormLayout.jsx";
 
 
 export const Login = () => {
