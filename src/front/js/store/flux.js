@@ -5,6 +5,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			isLogin: false,
 			user: {},
 			isAdmin: false,
+			accountExist: "void" //void, exist, notExist, 
 		},
 		actions: {
 			exampleFunction: () => { getActions().changeColor(0, "green"); },
@@ -40,18 +41,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 					body: JSON.stringify(formdata),
 				};
 				const response = await fetch(uri, options);
+				console.log(response)
 				if (!response.ok) {
-					return
+					setStore({ ...store, accountExist: "notExist" })
 				}
 				const data = await response.json()
 				localStorage.setItem("token", data.access_token);
 				localStorage.setItem("user", JSON.stringify(data.results))
-				setStore({ isLogin: true, isAdmin: data.results.is_admin, user: data.results })
+				setStore({ isLogin: true, isAdmin: data.results.is_admin, user: data.results, accountExist: "exist"  })
 			},
 			logout: () => {
 				localStorage.removeItem("token");
 				localStorage.removeItem("user");
-				setStore({ isLogin: false, isAdmin: false, user: {} });
+				setStore({ accountExist: "void", isLogin: false, isAdmin: false, user: {} });
 			},
 			register: async (formdata) => {
 				const uri = `${process.env.BACKEND_URL}/api/register`
@@ -70,7 +72,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const data = await response.json()
 				localStorage.setItem("token", data.access_token);
 				localStorage.setItem("user", JSON.stringify(data.results))
-				setStore({ isLogin: true, isAdmin: data.results.is_admin, user: data.results })
+				setStore({ accountExist: "exist", isLogin: true, isAdmin: data.results.is_admin, user: data.results })
 			},
 		}
 	};

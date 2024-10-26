@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext.js";
-import { Link } from "react-router-dom";
 import { FormLayout } from "../component/FormLayout.jsx";
+import { Input } from "../component/Input.jsx";
 
 export const Register = () => {
     const { store, actions } = useContext(Context)
@@ -21,97 +21,13 @@ export const Register = () => {
     }
     return (
         <FormLayout title={'Registrate'} onSubmit={handleRegister} actionText={'Registrar'}>
-            <div className='mb-3'>
-                <label htmlFor='email' className='form-label'>
-                    Email
-                </label>
-                <input
-                    type='email'
-                    className='form-control'
-                    id='email'
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                />
-            </div>
-            <div className='mb-3'>
-                <label htmlFor='password' className='form-label'>
-                    Password
-                </label>
-                <input
-                    type='password'
-                    className='form-control'
-                    id='password'
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                />
-            </div>
-            <div className='mb-3'>
-                <label htmlFor='password' className='form-label'>
-                    Name
-                </label>
-                <input
-                    type='password'
-                    className='form-control'
-                    id='password'
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    required
-                />
-            </div>
-            <div className='mb-3'>
-                <label htmlFor='password' className='form-label'>
-                    Age
-                </label>
-                <input
-                    type='password'
-                    className='form-control'
-                    id='password'
-                    value={age}
-                    onChange={(e) => setAge(e.target.value)}
-                    required
-                />
-            </div>
-            <div className='mb-3'>
-                <label htmlFor='password' className='form-label'>
-                    Weight
-                </label>
-                <input
-                    type='password'
-                    className='form-control'
-                    id='password'
-                    value={weight}
-                    onChange={(e) => setWeight(e.target.value)}
-                    required
-                />
-            </div>
-            <div className='mb-3'>
-                <label htmlFor='password' className='form-label'>
-                    Height
-                </label>
-                <input
-                    type='password'
-                    className='form-control'
-                    id='password'
-                    value={height}
-                    onChange={(e) => setHeight(e.target.value)}
-                    required
-                />
-            </div>
-            <div className='mb-3'>
-                <label htmlFor='password' className='form-label'>
-                    Target Weight
-                </label>
-                <input
-                    type='password'
-                    className='form-control'
-                    id='password'
-                    value={targetWeight}
-                    onChange={(e) => setTargetWeight(e.target.value)}
-                    required
-                />
-            </div>
+            <Input label="Email" id="email" value={email} onChange={(e) => setEmail(e.target.value)}  type={"text"}/>
+            <Input label="Password" id="password" value={password} onChange={(e) => setPassword(e.target.value)}  type={"password"}/>
+            <Input label="Name" id="name" value={name} onChange={(e) => setName(e.target.value)}  type={"text"}/>
+            <Input label="Age" id="age" value={age} onChange={(e) => setAge(e.target.value)}  type={"text"}/>
+            <Input label="Weight" id="age" value={weight} onChange={(e) => setWeight(e.target.value)}  type={"text"}/>
+            <Input label="Height" id="height" value={height} onChange={(e) => setHeight(e.target.value)}  type={"text"}/>
+            <Input label="Target Weight" id="targetWeight" value={targetWeight} onChange={(e) => setTargetWeight(e.target.value)}  type={"text"}/>
         </FormLayout>
     )
 }

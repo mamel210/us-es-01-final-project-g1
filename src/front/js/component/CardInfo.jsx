@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const CardInfo = () => {
+export const CardInfo = ({valero}) => {
   return (
     <div className=' shadow-lg cardContainer'>
       <div className='cardBody-container'>
@@ -11,7 +11,7 @@ export const CardInfo = () => {
         <div className='cardBody-content'>
           <div className='cardHeader-title'>
             <>"plan de ejercicios"</>
-            <div>HeaderIndicators</div>
+            <div>{valero}</div>
           </div>
           <div className='timeDurationContent'>
             Duración:

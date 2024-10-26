@@ -1,11 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-export const FormLayout = ({ title, onSubmit, customWidth, actionText, children, adionalActionHint, adionalActionPath, adionalActionText }) => {
+export const FormLayout = ({ title, onSubmit, customWidth, actionText, children, adionalActionHint, adionalActionPath, adionalActionText, customMessage }) => {
     return (
         <div className='container-fluid d-flex justify-content-center align-items-center p-0' style={{ height: '100vh' }}>
             <div className='row w-100 h-100 m-0 position-relative'>
-                {/* Columna para la imagen de fondo */}
                 <div
                     className='col-12 position-absolute'
                     style={{
@@ -28,16 +27,18 @@ export const FormLayout = ({ title, onSubmit, customWidth, actionText, children,
                     >
                         <h2 className='text-center mb-4'>{title}</h2>
                         <form onSubmit={onSubmit}>
-                                {children}
+                            {children}
                             <button type='submit' className='btn btn-primary w-100'>
                                 {actionText}
                             </button>
                             {adionalActionText && (
                                 <div className='text-center mt-3'>
-                                <p>
-                                  {adionalActionHint} <Link to={adionalActionPath}>{adionalActionText }</Link>
-                                </p>
-                              </div>
+                                    {customMessage ? <>{customMessage}</> : null}
+
+                                    <p>
+                                        {adionalActionHint} <Link to={adionalActionPath}>{adionalActionText}</Link>
+                                    </p>
+                                </div>
                             )}
                         </form>
                     </div>
