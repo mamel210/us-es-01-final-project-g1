@@ -5,7 +5,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			isLogin: false,
 			user: {},
 			isAdmin: false,
-			accountExist: "void" //void, exist, notExist, 
+			accountExist: "void",  //void, exist, notExist,
+			errorMessage : null 
 		},
 		actions: {
 			exampleFunction: () => { getActions().changeColor(0, "green"); },
@@ -31,7 +32,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				});
 				setStore({ demo: demo });  // Reset the global store
 			},
-			login: async (formdata) => {
+			login: async (formdata, navigate) => {
 				const uri = `${process.env.BACKEND_URL}/api/login`
 				const options = {
 					method: 'POST',
@@ -41,21 +42,21 @@ const getState = ({ getStore, getActions, setStore }) => {
 					body: JSON.stringify(formdata),
 				};
 				const response = await fetch(uri, options);
-				console.log(response)
 				if (!response.ok) {
-					setStore({ ...store, accountExist: "notExist" })
+					setStore({accountExist: "notExist" })
 				}
 				const data = await response.json()
 				localStorage.setItem("token", data.access_token);
 				localStorage.setItem("user", JSON.stringify(data.results))
 				setStore({ isLogin: true, isAdmin: data.results.is_admin, user: data.results, accountExist: "exist"  })
+				navigate('/dashboard')
 			},
 			logout: () => {
 				localStorage.removeItem("token");
 				localStorage.removeItem("user");
 				setStore({ accountExist: "void", isLogin: false, isAdmin: false, user: {} });
 			},
-			register: async (formdata) => {
+			register: async (formdata, navigate) => {
 				const uri = `${process.env.BACKEND_URL}/api/register`
 				const options = {
 					method: 'POST',
@@ -65,14 +66,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 					body: JSON.stringify(formdata),
 				};
 				const response = await fetch(uri, options);
-				console.log(response);
 				if (!response.ok) {
+					const errorMessage = await response.json()
+					setStore({errorMessage: errorMessage.message})
 					return
 				}
 				const data = await response.json()
 				localStorage.setItem("token", data.access_token);
 				localStorage.setItem("user", JSON.stringify(data.results))
 				setStore({ accountExist: "exist", isLogin: true, isAdmin: data.results.is_admin, user: data.results })
+				navigate('/dashboard')
 			},
 		}
 	};
