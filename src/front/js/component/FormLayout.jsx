@@ -31,10 +31,9 @@ export const FormLayout = ({ title, onSubmit, customWidth, actionText, children,
                             <button type='submit' className='btn btn-primary w-100'>
                                 {actionText}
                             </button>
+                            {customMessage ? <div className='text-center mt-3'>{customMessage} </div> : null}
                             {adionalActionText && (
                                 <div className='text-center mt-3'>
-                                    {customMessage ? <>{customMessage}</> : null}
-
                                     <p>
                                         {adionalActionHint} <Link to={adionalActionPath}>{adionalActionText}</Link>
                                     </p>
