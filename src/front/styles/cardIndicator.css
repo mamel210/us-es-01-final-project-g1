@@ -1,0 +1,32 @@
+.cardIndicator-content {
+    position: relative;
+    z-index: 10;
+    color: #ffffff;
+    background: linear-gradient(to right, #38b2ac, #38a169);
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+    padding: 8px;
+  }
+  
+  .cardIndicator-value {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  
+  .cardIndicator-description {
+    font-size: 1rem;
+    color: #c6f6d5; 
+    font-weight: 600;
+  }
+  
+  .cardIndicator-icon {
+    position: absolute;
+    bottom: -35px;
+    right: -24px;
+    width: 8rem; 
+    height: 8rem;
+    color: #2f855a; 
+    opacity: 0.5;
+  }
