@@ -6,10 +6,10 @@ export const Logout = () => {
     const { actions } = useContext(Context)
     const navigate = useNavigate()
 
-    const logout= () => {
+    const logout = () => {
         actions.logout()
-        navigate("login")
-    } 
+        navigate("/")
+    }
 
     return (
         <div className="logout" onClick={logout}>

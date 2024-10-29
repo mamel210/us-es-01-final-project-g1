@@ -7,6 +7,8 @@ import injectContext from "./store/appContext";
 import { Login } from "./pages/Login.jsx";
 import { Register } from "./pages/Register.jsx";
 import { Dashboard } from "./pages/Dashboard.jsx";
+import { AboutUs } from "./pages/AboutUs.jsx";
+import { ContactUs } from "./pages/ContactUs.jsx";
 import { Navbar } from "./component/Navbar.jsx";
 
 
@@ -20,11 +22,13 @@ const Layout = () => {
 
     return (
         <BrowserRouter basename={basename}>
-            <Navbar/>
+            <Navbar />
             <Routes>
                 <Route element={<Login />} path="/" />
                 <Route element={<Dashboard />} path="/dashboard" />
                 <Route element={<Register />} path="/register" />
+                <Route element={<AboutUs />} path="/about-us" />
+                <Route element={<ContactUs />} path="/contact-us" />
                 <Route element={<h1>Not found!</h1>} path="*" />
             </Routes>
         </BrowserRouter>

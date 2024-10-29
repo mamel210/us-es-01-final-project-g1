@@ -77,6 +77,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ accountExist: "exist", isLogin: true, isAdmin: data.results.is_admin, user: data.results })
 				navigate('/dashboard')
 			},
+			getTrainingPlans:async () => {
+					const uri = `${process.env.BACKEND_URL}/api/training-plans`
+					const authToken =
+					const options = {
+						method: 'get',
+					};
+					const response = await fetch(uri, options)
+					console.log("🚀 ~ file: flux.js:87 ~ getTrainingPlans: ~ response:", response)
+			}
 		}
 	};
 };

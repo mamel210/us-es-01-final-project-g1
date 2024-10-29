@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { Logout } from "./Logout.jsx";
 
 
 export const Navbar = () => {
@@ -10,26 +11,17 @@ export const Navbar = () => {
 	};
 
 	return (
-		<nav className="navbar">
-			<div className="logo">PowerPulse</div>
+		<nav className="navbar ">
+			<div className="navbar-brand">
+				<Link to={"dashboard"}>PowerPulse</Link>
+			</div>
 			<ul className="nav-links m-0">
-				<li><a href="#home">Inicio</a></li>
-				<li><a href="#about">Sobre Nosotros</a></li>
-				<li>
-					<div className="dropdown">
-						<button onClick={toggleDropdown} className="dropbtn">Servicios</button>
-						{dropdownOpen && (
-							<div className="dropdown-content ">
-								<a href="#personal-training">Entrenamiento Personal</a>
-								<a href="#nutrition">Nutrición</a>
-								<a href="#group-classes">Clases Grupales</a>
-							</div>
-						)}
-					</div>
-				</li>
-				<li><a href="#contact">Contacto</a></li>
+				<div className="nav-item">
+					<Link to={"about-us"}>About us</Link>
+				</div>
+				<Link to={"contact-us"}>Contactanos</Link>
 			</ul>
-			<button className="cta-button">Únete Ahora</button>
+			<button className="cta-button"><Logout /></button>
 		</nav>
 	);
 }

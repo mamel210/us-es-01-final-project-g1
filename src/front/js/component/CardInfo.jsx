@@ -1,32 +1,59 @@
 import React from 'react'
+import "../../styles/cardInfo.css"
+import { FaClock } from 'react-icons/fa'
 
-export const CardInfo = ({valero}) => {
+
+export const CardInfo = ({ title, subtitle, description, durationTime }) => {
   return (
-    <div className=' shadow-lg cardContainer'>
-      <div className='cardBody-container'>
-        <div className='cardBody-image'>
-          <img className='cardBody-image-img' src='https://images.unsplash.com/photo-1591227174835-d3705c881c90?w=294&dpr=1&h=294&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxjb2xsZWN0aW9uLXRodW1ibmFpbHx8ODMyNTE3MHx8ZW58MHx8fHx8' alt={"mamel"} />
+    <div className='blog-card'>
+      <div className='meta'>
+        <div
+          className='photo'
+          style={{
+            backgroundImage:
+              'url(https://images.unsplash.com/photo-1591227174835-d3705c881c90?w=294&dpr=1&h=294&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxjb2xsZWN0aW9uLXRodW1ibmFpbHx8ODMyNTE3MHx8ZW58MHx8fHx8)'
+          }}
+        ></div>
+        <ul className='details'>
+          <li className='author'>
+            <a href='#'>Planes</a>
+          </li>
+          <li className='date'>Actualizado, Dec. 24, 2024</li>
+          <li className='tags'>
+            <ul>
+              <li>
+                <a href='#'>Beginners</a>
+              </li>
+              <li>
+                <a href='#'>Medium</a>
+              </li>
+              <li>
+                <a href='#'>Expert</a>
+              </li>
+              {/* <li>
+              <a href='#'>High Impact</a>
+            </li> */}
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div className='description'>
+        <h1>{title}</h1>
+        <h2>{subtitle}</h2>
+        {/* descripcion del plan */}
+        {/* items relaciones */}
+        {/* tiempo aproximado de duracion */}
+        <div>{description}</div>
+        <div className='d-flex gap-1'>
+          
+          <span>Duración <FaClock /> :</span>
+          
+          <div>{durationTime ?? "12:12:12"}</div>
         </div>
 
-        <div className='cardBody-content'>
-          <div className='cardHeader-title'>
-            <>"plan de ejercicios"</>
-            <div>{valero}</div>
-          </div>
-          <div className='timeDurationContent'>
-            Duración:
-            <i class="fas fa-clock"></i>
-            <div>12:12:12</div>
-          </div>
-          <div className='cardBody-text'><p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium natus consectetur ab blanditiis nostrum
-            nesciunt temporibus maxime quam?
-          </p>
-            <ul>
-              <li>item1</li>
-              <li>item3</li>
-            </ul></div>
-        </div>
+        <p className='read-more'>
+          <a href='#'>Ver planes</a>
+        </p>
       </div>
     </div>
 
