@@ -1,5 +1,5 @@
 :root {
-    --primary-orange: #ff5733;
+    --primary: #ff5733;
     --primary-dark: #2c2b33;
     --light: #fff;
     --gray: #d3c7bb;
@@ -12,7 +12,7 @@ body {
 }
 
 .navbar {
-    background-color: var(--primary-orange);
+    background-color: var(--primary);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -75,7 +75,7 @@ read-more .nav-links a {
 }
 
 .dropdown-content a:hover {
-    background-color: var(--primary-orange);
+    background-color: var(--primary);
 }
 
 /* Estilo del botón de llamada a la acción */

@@ -81,7 +81,7 @@ def training_plans():
                             registration_date=data.get('registration_date'),
                             finalization_date=data.get('finalization_date'),
                             quantity_session=data.get('quantity_session'),
-                            is_active=data.get('is_active'),
+                            is_active=True,
                             user_id=current_user['user_id'])
         db.session.add(row)
         db.session.commit()

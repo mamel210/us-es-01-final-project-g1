@@ -66,6 +66,7 @@ class TrainingPlans(db.Model):
     is_active = db.Column(db.Boolean, unique=False, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     user_to = db.relationship('Users', foreign_keys=[user_id], backref=db.backref('training_plans', lazy='select'))
+    # test
 
     def __repr__(self):
         return f'<TrainingPlan {self.id} - {self.name}>'

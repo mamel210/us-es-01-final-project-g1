@@ -118,6 +118,8 @@
   }
   
   .main-cards {
+    display: flex;
+    flex-wrap: wrap;
     column-count: 2;
     column-gap: 20px;
     margin: 20px;
@@ -125,18 +127,7 @@
   
 
   
-  /* Force varying heights to simulate dynamic content */
-  /* .card:first-child {
-    height: 485px;
-  }
-  
-  .card:nth-child(2) {
-    height: 200px;
-  }
-  
-  .card:nth-child(3) {
-    height: 265px;
-  } */
+
   
   .footer {
     grid-area: footer;

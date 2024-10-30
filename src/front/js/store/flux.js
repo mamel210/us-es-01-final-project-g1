@@ -6,24 +6,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 			user: {},
 			isAdmin: false,
 			accountExist: "void",  //void, exist, notExist,
-			errorMessage : null 
+			errorMessage: null,
+			trainingPlans: {}
 		},
 		actions: {
 			exampleFunction: () => { getActions().changeColor(0, "green"); },
-			getMessage: async () => {
-				const uri = `${process.env.BACKEND_URL}/api/hello`
-				const options = {
-					method: 'GET'
-				}
-				const response = await fetch(uri, options)
-				if (!response.ok) {
-					console.log("Error loading message from backend", response.status)
-					return
-				}
-				const data = await response.json()
-				setStore({ message: data.message })
-				return data;
-			},
 			changeColor: (index, color) => {
 				const store = getStore();  // Get the store
 				const demo = store.demo.map((element, i) => {
@@ -43,12 +30,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 				};
 				const response = await fetch(uri, options);
 				if (!response.ok) {
-					setStore({accountExist: "notExist" })
+					setStore({ accountExist: "notExist" })
 				}
 				const data = await response.json()
 				localStorage.setItem("token", data.access_token);
 				localStorage.setItem("user", JSON.stringify(data.results))
-				setStore({ isLogin: true, isAdmin: data.results.is_admin, user: data.results, accountExist: "exist"  })
+				setStore({ isLogin: true, isAdmin: data.results.is_admin, user: data.results, accountExist: "exist" })
 				navigate('/dashboard')
 			},
 			logout: () => {
@@ -68,7 +55,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const response = await fetch(uri, options);
 				if (!response.ok) {
 					const errorMessage = await response.json()
-					setStore({errorMessage: errorMessage.message})
+					setStore({ errorMessage: errorMessage.message })
 					return
 				}
 				const data = await response.json()
@@ -77,14 +64,47 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ accountExist: "exist", isLogin: true, isAdmin: data.results.is_admin, user: data.results })
 				navigate('/dashboard')
 			},
-			getTrainingPlans:async () => {
-					const uri = `${process.env.BACKEND_URL}/api/training-plans`
-					const authToken =
-					const options = {
-						method: 'get',
-					};
-					const response = await fetch(uri, options)
-					console.log("🚀 ~ file: flux.js:87 ~ getTrainingPlans: ~ response:", response)
+			createPlan: async (data, navigate) => {
+				console.log(data)
+				const uri = `${process.env.BACKEND_URL}/api/training-plans`
+				const authToken = localStorage.getItem("token")
+				const options = {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+						Authorization: ` Bearer ${authToken}`
+					},
+					body: JSON.stringify(data),
+				}
+				const response = await fetch(uri, options)
+
+				if (!response.ok) {
+					return
+				}
+				const newTrainingPlan = await response.json()
+				console.log("results", newTrainingPlan)
+				const prevData = getStore()
+				console.log("prevData", prevData)
+				setStore({ ...prevData, trainingPlans: [...prevData.trainingPlans.results, newTrainingPlan.results] })
+				navigate("/dashboard")
+
+			},
+			getTrainingPlans: async () => {
+				const uri = `${process.env.BACKEND_URL}/api/training-plans`
+				const authToken = localStorage.getItem("token")
+
+				const options = {
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json',
+						Authorization: ` Bearer ${authToken}`
+					}
+				}
+				const response = await fetch(uri, options)
+				const trainingPlans = await response.json()
+				setStore({ trainingPlans })
+
+
 			}
 		}
 	};

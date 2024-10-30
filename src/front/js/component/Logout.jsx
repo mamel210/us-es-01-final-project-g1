@@ -13,7 +13,7 @@ export const Logout = () => {
 
     return (
         <div className="logout" onClick={logout}>
-            <i class="fa-solid fa-power-off"></i>
+            <i className="fa-solid fa-power-off"></i>
         </div>
     )
 }

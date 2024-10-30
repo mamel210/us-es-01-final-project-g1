@@ -1,6 +1,7 @@
 import React from 'react'
 import "../../styles/cardInfo.css"
 import { FaClock } from 'react-icons/fa'
+import { Link } from 'react-router-dom'
 
 
 export const CardInfo = ({ title, subtitle, description, durationTime }) => {
@@ -52,6 +53,7 @@ export const CardInfo = ({ title, subtitle, description, durationTime }) => {
         </div>
 
         <p className='read-more'>
+        <Link to={"/create-plan"}>Crear plan</Link>
           <a href='#'>Ver planes</a>
         </p>
       </div>
