@@ -1,19 +1,22 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Logout } from "./Logout.jsx";
+import { Context } from "../store/appContext.js";
 
 
 export const Navbar = () => {
-	const [dropdownOpen, setDropdownOpen] = useState(false);
+	const { store } = useContext(Context);
+	// const [dropdownOpen, setDropdownOpen] = useState(false);
+	// const toggleDropdown = () => {setDropdownOpen(!dropdownOpen);};
+	const navigate = useNavigate()
 
-	const toggleDropdown = () => {
-		setDropdownOpen(!dropdownOpen);
-	};
-
+	const login = () => {
+		navigate("/")
+	}
 	return (
 		<nav className="navbar ">
 			<div className="navbar-brand">
-				<Link to={"dashboard"}>PowerPulse</Link>
+				<Link to={store.isLogin ? "dashboard" : "/"}>PowerPulse</Link>
 			</div>
 			<ul className="nav-links m-0">
 				<div className="nav-item">
@@ -21,7 +24,15 @@ export const Navbar = () => {
 				</div>
 				<Link to={"contact-us"}>Contactanos</Link>
 			</ul>
-			<button className="cta-button"><Logout /></button>
+			<button className="cta-button">
+				{store.isLogin ?
+					<Logout />
+					:
+					<div className="logout" onClick={login}>
+						<i className="fa-solid fa-right-to-bracket"></i>
+					</div>
+				}
+			</button>
 		</nav>
 	);
 }

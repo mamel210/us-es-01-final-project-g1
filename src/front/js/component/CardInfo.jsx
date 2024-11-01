@@ -2,9 +2,12 @@ import React from 'react'
 import "../../styles/cardInfo.css"
 import { FaClock } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
+import { useModels } from '../hooks/useModels'
 
+export const CardInfo = ({ title, subtitle, description, durationTime, model }) => {
 
-export const CardInfo = ({ title, subtitle, description, durationTime }) => {
+  const { mapViewModels, mapModels, mapRoutesModels } = useModels()
+
   return (
     <div className='blog-card'>
       <div className='meta'>
@@ -17,7 +20,7 @@ export const CardInfo = ({ title, subtitle, description, durationTime }) => {
         ></div>
         <ul className='details'>
           <li className='author'>
-            <a href='#'>Planes</a>
+            <a href='#'>{mapModels[model]}</a>
           </li>
           <li className='date'>Actualizado, Dec. 24, 2024</li>
           <li className='tags'>
@@ -31,9 +34,6 @@ export const CardInfo = ({ title, subtitle, description, durationTime }) => {
               <li>
                 <a href='#'>Expert</a>
               </li>
-              {/* <li>
-              <a href='#'>High Impact</a>
-            </li> */}
             </ul>
           </li>
         </ul>
@@ -41,20 +41,16 @@ export const CardInfo = ({ title, subtitle, description, durationTime }) => {
       <div className='description'>
         <h1>{title}</h1>
         <h2>{subtitle}</h2>
-        {/* descripcion del plan */}
-        {/* items relaciones */}
-        {/* tiempo aproximado de duracion */}
         <div>{description}</div>
         <div className='d-flex gap-1'>
-          
+
           <span>Duración <FaClock /> :</span>
-          
+
           <div>{durationTime ?? "12:12:12"}</div>
         </div>
 
         <p className='read-more'>
-        <Link to={"/create-plan"}>Crear plan</Link>
-          <a href='#'>Ver planes</a>
+          <Link to={mapRoutesModels[model]}>{mapViewModels[model]}</Link>
         </p>
       </div>
     </div>

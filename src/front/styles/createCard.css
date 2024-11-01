@@ -1,5 +1,4 @@
 .createCard-container {
-
   padding: 2rem 1rem;
   border-radius: 8px;
   border: 1px solid var(--primary);
@@ -7,8 +6,11 @@
   display: flex;
   align-items: center;
   place-content: center;
-  max-width: 350px;
+  height: 195px;
+  max-height: 200px;
+  width: 100%;
   box-shadow: 0 0 8px 0 var(--primary);
+  margin-bottom: 1rem;
 }
 
 .createCard-text {

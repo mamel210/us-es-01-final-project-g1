@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-export const FormLayout = ({ title, onSubmit, customWidth, actionText, children, adionalActionHint, adionalActionPath, adionalActionText, customMessage }) => {
+export const FormLayout = ({ title, onSubmit, customWidth, actionText, children, adionalActionHint, adionalActionPath, aditionalCallback, adionalActionText, customMessage }) => {
     return (
         <div className='container-fluid d-flex justify-content-center align-items-center p-0' style={{ height: '100vh' }}>
             <div className='row w-100 h-100 m-0 position-relative'>
@@ -35,7 +35,7 @@ export const FormLayout = ({ title, onSubmit, customWidth, actionText, children,
                             {adionalActionText && (
                                 <div className='text-center mt-3'>
                                     <p>
-                                        {adionalActionHint} <Link to={adionalActionPath}>{adionalActionText}</Link>
+                                        {adionalActionHint} <Link onClick={aditionalCallback} to={adionalActionPath}>{adionalActionText}</Link>
                                     </p>
                                 </div>
                             )}
