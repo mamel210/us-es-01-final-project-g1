@@ -36,10 +36,10 @@ class Users(db.Model):
 
 class Exercises(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80), unique=True, nullable=False)
-    description = db.Column(db.String(100), unique=False, nullable=False)
-    muscle = db.Column(db.String(), unique=True, nullable=False)
-    exercise_base = db.Column(db.String(), unique=True, nullable=False) 
+    name = db.Column(db.String(), unique=False, nullable=False)
+    description = db.Column(db.Text(), unique=False, nullable=False)
+    muscle = db.Column(db.String(), unique=False, nullable=False)
+    exercise_base = db.Column(db.String(), unique=False, nullable=False) 
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'), nullable=False)
     category_to = db.relationship('Categories', foreign_keys=[category_id], backref=db.backref('exercises', lazy='select'))
 
@@ -175,7 +175,7 @@ class Muscles(db.Model):
     __tablename__= 'muscles'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=True, nullable=False)
-    name_en = db.Column(db.String(50), unique=True, nullable=False)
+    name_en = db.Column(db.String(50), unique=False, nullable=False)
     is_front = db.Column(db.Boolean, default=False, nullable=False)
     image_url_main = db.Column(db.String(), unique=True, nullable=False)
     image_url_secondary = db.Column(db.String(), unique=True, nullable=False)

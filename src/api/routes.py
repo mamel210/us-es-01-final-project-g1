@@ -7,7 +7,8 @@ from flask_cors import CORS
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import get_jwt_identity
-from api.models import db, Users, TrainingPlans, Exercises, SessionExercises, TrainingExercises, Sessions
+from api.models import db, Users, TrainingPlans, Exercises, SessionExercises, TrainingExercises, Sessions, MuscleExercises, Categories, Muscles 
+import requests
 
 
 api = Blueprint('api', __name__)
@@ -35,6 +36,7 @@ def login():
     response_body['access_token'] = access_token
     response_body['results'] = user.serialize()
     return response_body, 200
+
 
 @api.route("/register", methods=["POST"])
 def register():
@@ -89,6 +91,7 @@ def training_plans():
         response_body['results'] = row.serialize()
         return response_body, 200
 
+
 @api.route('/training-plans/<int:id>', methods=['GET', 'PUT', 'DELETE'])
 @jwt_required()
 def training_plan(id):
@@ -126,6 +129,7 @@ def training_plan(id):
         response_body['results'] = {}
         return response_body, 200
 
+
 @api.route('/sessions', methods=['GET', 'POST'])
 @jwt_required()
 def sessions():
@@ -158,6 +162,7 @@ def sessions():
         response_body['results'] = row.serialize()
         return response_body, 200
 
+
 @api.route('/exercises', methods=['GET', 'POST'])
 @jwt_required()
 def exercises():
@@ -176,6 +181,7 @@ def exercises():
         response_body['message'] = 'Ejercicio creado exitosamente'
         response_body['results'] = row.serialize()
         return response_body, 200
+
 
 @api.route('/session-exercises', methods=['GET', 'POST'])
 @jwt_required()
@@ -222,3 +228,60 @@ def training_exercises():
         response_body['message'] = 'Ejercicio añadido al plan de entrenamiento exitosamente'
         response_body['results'] = row.serialize()
         return response_body, 200
+
+
+@api.route('/initial-setup', methods=['GET'])
+@jwt_required()
+def initial_setup():
+    response_body = {}
+    current_user = get_jwt_identity()
+    if not current_user["is_admin"]: 
+        response_body["message"] = "Unauthorized"
+        return response_body, 401
+    # Muscle: wger.de     
+    url = 'https://wger.de/api/v2/muscle/'
+    response = requests.get(url)
+    if response.status_code == 200:
+        data = response.json()
+        response_body["muscles"] = data["results"]
+        for row in data["results"]:
+            item = Muscles(name=row['name'],
+                           name_en=row['name_en'],
+                           id=row['id'],
+                           is_front=row['is_front'],
+                           image_url_main=row['image_url_main'],
+                           image_url_secondary=row['image_url_secondary'])
+            db.session.add(item)
+            db.session.commit()    
+    # Category: wger.de
+    url = 'https://wger.de/api/v2/exercisecategory/'
+    response = requests.get(url)
+    if response.status_code == 200:
+        data = response.json()
+        response_body["categories"] = data["results"]
+        for row in data["results"]:
+            item = Categories(id=row['id'],
+                              name=row['name'])                     
+            db.session.add(item)
+            db.session.commit()  
+    # Exercise: wger.de
+    url = 'https://wger.de/api/v2/exercise/?equipment=7&language=4&limit=39'
+    response = requests.get(url)
+    if response.status_code == 200:
+        data = response.json()
+        response_body["exercises"] = data["results"]
+        for row in data["results"]:
+            item = Exercises(id=row['id'],
+                             name=row['name'],
+                             description=row['description'],
+                             muscle='muscles',
+                             exercise_base=row['exercise_base'],
+                             category_id=row['category'])
+            db.session.add(item)
+            db.session.commit()  
+
+    response_body["message"] = "Setup Ok"    
+    return response_body, 200 
+
+
+
