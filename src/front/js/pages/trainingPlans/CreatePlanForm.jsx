@@ -4,10 +4,11 @@ import { useNavigate } from 'react-router-dom'
 import { FormLayout } from '../../component/FormLayout.jsx'
 import { Input } from '../../component/Input.jsx'
 import { Context } from '../../store/appContext.js'
-
+import { useLevelOptions } from '../../hooks/useLevelOptions.js'
 
 
 export const CreatePlanForm = () => {
+    const { levelOptions } = useLevelOptions()
     const { actions, store } = useContext(Context)
     const user = JSON.parse(localStorage.getItem("user"))
     const [name, setName] = useState("")
@@ -16,23 +17,18 @@ export const CreatePlanForm = () => {
     const [quantitySession, setQuantitySession] = useState("")
     const [level, setLevel] = useState("begginer") // 'begginer', 'intermediate', 'advanced',
     const navigate = useNavigate()
+
     const createPlan = (e) => {
         e.preventDefault()
-        const data = {
+        const formData = {
             name,
             registration_date: registrationDate,
             finalization_date: finalizationDate,
             quantity_session: quantitySession,
             level: level
         }
-        actions.createPlan(data, navigate)
+        actions.crudTrainingPlans({ formData, navigate, action: "create" })
     }
-    
-    const levelOptions = [
-        { value: 'begginer', label: 'Begginer' },
-        { value: 'intermediate', label: 'Intermediate' },
-        { value: 'advanced', label: 'Advanced' }
-    ]
 
     return (
         <FormLayout title={"Create your Exercise Plan"} onSubmit={createPlan} actionText={"Create Plan"}>
@@ -49,4 +45,3 @@ export const CreatePlanForm = () => {
         </FormLayout >
     )
 }
-

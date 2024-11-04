@@ -1,26 +1,24 @@
+const initialState = {
+	message: null,
+	isLogin: false,
+	user: {},
+	isAdmin: false,
+	errorMessage: null,
+	trainingPlansStates: {
+		trainingPlans: [],
+		isTrainingPlansLoading: false,
+		currentTrainingPlan: {},
+		filter: "",
+		action: ""
+	},
+}
+
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
-		store: {
-			message: null,
-			isLogin: false,
-			user: {},
-			isAdmin: false,
-			errorMessage: null,
-			trainingPlans: {},
-			isTrainingPlansLoading: false,
-			currentTrainingPlan: {}
-		},
+		store: { ...initialState },
 		actions: {
 			resetState: () => {
-				return setStore({
-					message: null,
-					isLogin: false,
-					user: {},
-					isAdmin: false,
-					errorMessage: null,
-					trainingPlans: {},
-					isTrainingPlansLoading: false
-				})
+				return setStore({ ...initialState })
 			},
 			login: async (formdata, navigate) => {
 				setStore({ errorMessage: null, })
@@ -41,20 +39,25 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				localStorage.setItem("token", data.access_token);
 				localStorage.setItem("user", JSON.stringify(data.results))
-				setStore({ isLogin: true, isAdmin: data?.results?.is_admin, user: data?.results, message: data.message })
+				setStore({
+					isLogin: true,
+					isAdmin: data?.results?.is_admin,
+					user: data?.results,
+					message: data.message
+				})
 				navigate('/dashboard')
 			},
 			logout: () => {
 				localStorage.removeItem("token");
 				localStorage.removeItem("user");
-				setStore({ isLogin: false, isAdmin: false, user: {}, message: "null", errorMessage: null, });
+				setStore({ isLogin: false, isAdmin: false, user: {}, message: null, errorMessage: null, });
 			},
 			isLogin: () => {
 				const authToken = localStorage.getItem("token")
 				const user = localStorage.getItem("user")
 
 				if (Boolean(authToken) && Boolean(user)) {
-					setStore({ isLogin: true, })
+					setStore({ ...getStore(), isLogin: true, })
 					return getActions().getTrainingPlans();
 				}
 
@@ -80,33 +83,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ isLogin: true, isAdmin: data.results.is_admin, user: data.results, message: data.message })
 				navigate('/dashboard')
 			},
-			createPlan: async (data, navigate) => {
-				const uri = `${process.env.BACKEND_URL}/api/training-plans`
-				const authToken = localStorage.getItem("token")
-				const options = {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-						Authorization: ` Bearer ${authToken}`
-					},
-					body: JSON.stringify(data),
-				}
-				const response = await fetch(uri, options)
-
-				if (!response.ok) {
-					return;
-				}
-				navigate("/dashboard")
-				return response
+			setAction: (action) => {
+				setStore({
+					...getStore(),
+					trainingPlansStates: {
+						...getStore().trainingPlansStates,
+						action
+					}
+				})
 			},
 			getCurrentTrainingPlan: (plan) => {
-				setStore({ ...getStore(), currentTrainingPlan: plan, })
+				setStore({ ...getStore(), trainingPlansStates: { ...getStore().trainingPlansStates, currentTrainingPlan: plan } })
 			},
-			editPlan: async (formData, navigate, currentPlanId) => {
-				const uri = `${process.env.BACKEND_URL}/api/training-plans/${currentPlanId}`
+			crudTrainingPlans: async ({ formData, navigate, currentPlanId, action }) => {
+				const method = {
+					create: "POST",
+					edit: "PUT",
+					delete: "DELETE"
+				}
+				const uri = `${process.env.BACKEND_URL}/api/training-plans${action !== "create" ? `/${currentPlanId}` : ""}`
 				const authToken = localStorage.getItem("token")
 				const options = {
-					method: 'PUT',
+					method: method[action],
 					headers: {
 						'Content-Type': 'application/json',
 						Authorization: ` Bearer ${authToken}`
@@ -119,11 +117,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 					setStore({ errorMessage: data.message, message: data.message, })
 					return alert(data.message)
 				}
-				setStore({ ...getStore(), trainingPlans: data.results })
+				setStore({
+					...getStore(),
+					message: data.message,
+					trainingPlansStates: {
+						...getStore().trainingPlansStates,
+						filter: ""
+					}
+				})
 				navigate("/training-plan")
-				// return response
+				return response
 			},
 			getTrainingPlans: async () => {
+
 				const uri = `${process.env.BACKEND_URL}/api/training-plans`
 				const authToken = localStorage.getItem("token")
 				const options = {
@@ -133,19 +139,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 						Authorization: ` Bearer ${authToken}`
 					}
 				}
-				setStore({ ...getStore(), isTrainingPlansLoading: true })
+				setStore({ ...getStore(), trainingPlansStates: { ...getStore().trainingPlansStates, isTrainingPlansLoading: true } })
 				const response = await fetch(uri, options)
 				const trainingPlans = await response.json()
 				if (!response.ok) {
-					setStore({ isTrainingPlansLoading: false })
+					setStore({ ...getStore(), trainingPlansStates: { ...getStore().trainingPlansStates, isTrainingPlansLoading: false } })
 					return
 				}
 
 				setStore({
-					trainingPlans,
-					isTrainingPlansLoading: false
+					...getStore(),
+					trainingPlansStates: {
+						...getStore().trainingPlansStates,
+						trainingPlansCount: trainingPlans.results.length,
+						trainingPlans: trainingPlans.results,
+						isTrainingPlansLoading: false
+					}
 				})
-			}
+			},
+			setTrainingPlansFilters: (filter) => {
+				setStore({ ...getStore(), trainingPlansStates: { ...getStore().trainingPlansStates, filter: filter } })
+
+			},
 		}
 	};
 };

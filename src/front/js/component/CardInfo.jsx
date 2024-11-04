@@ -1,12 +1,24 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import "../../styles/cardInfo.css"
 import { FaClock } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import { useModels } from '../hooks/useModels'
+import { Context } from '../store/appContext'
 
-export const CardInfo = ({ title, subtitle, description, durationTime, model }) => {
 
+export const CardInfo = ({ title, subtitle, description, durationTime, model, setupItems }) => {
+  const { actions } = useContext(Context)
+
+  const items = {
+    item_1: setupItems["item_1"],
+    item_2: setupItems["item_2"],
+    item_3: setupItems["item_3"],
+  }
   const { mapViewModels, mapModels, mapRoutesModels } = useModels()
+
+  const handleViewPlans = () => {
+    return actions.setTrainingPlansFilters("")
+  }
 
   return (
     <div className='blog-card'>
@@ -26,13 +38,13 @@ export const CardInfo = ({ title, subtitle, description, durationTime, model }) 
           <li className='tags'>
             <ul>
               <li>
-                <a href='#'>Beginners</a>
+                <Link to={mapRoutesModels[model]} onClick={(e) => items?.item_1.onClick(e)}>Beginners</Link>
               </li>
               <li>
-                <a href='#'>Medium</a>
+                <Link to={mapRoutesModels[model]} onClick={(e) => items?.item_2.onClick(e)}>Medium</Link>
               </li>
               <li>
-                <a href='#'>Expert</a>
+                <Link to={mapRoutesModels[model]} onClick={(e) => items?.item_3.onClick(e)}>Expert</Link>
               </li>
             </ul>
           </li>
@@ -50,7 +62,7 @@ export const CardInfo = ({ title, subtitle, description, durationTime, model }) 
         </div>
 
         <p className='read-more'>
-          <Link to={mapRoutesModels[model]}>{mapViewModels[model]}</Link>
+          <Link to={mapRoutesModels[model]} onClick={handleViewPlans}>{mapViewModels[model]}</Link>
         </p>
       </div>
     </div>

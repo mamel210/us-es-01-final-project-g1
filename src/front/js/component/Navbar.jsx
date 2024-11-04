@@ -16,7 +16,7 @@ export const Navbar = () => {
 	return (
 		<nav className="navbar ">
 			<div className="navbar-brand">
-				<Link to={store.isLogin ? "dashboard" : "/"}>PowerPulse</Link>
+				<Link to={store.isLogin ? "/dashboard" : "/dashboard"}>PowerPulse</Link>
 			</div>
 			<ul className="nav-links m-0">
 				<div className="nav-item">

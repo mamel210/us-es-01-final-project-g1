@@ -5,6 +5,7 @@ import { FormLayout } from "../component/FormLayout.jsx";
 import { Input } from "../component/Input.jsx";
 import { BannerMessage } from "../component/BannerMessage.jsx";
 
+
 export const Register = () => {
     const { store, actions } = useContext(Context)
     console.log("ADENTRO DE REGISTER", store.error)

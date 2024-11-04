@@ -17,6 +17,7 @@ export const useModels = () => {
     // session_exercises,
     // muscle_exercises
   }
+  
   const mapRoutesModels = {
     training_plans: "/training-plan",
     default: ""
@@ -25,6 +26,6 @@ export const useModels = () => {
     // session_exercises,
     // muscle_exercises
   }
-  
-  return {mapViewModels, mapModels, mapRoutesModels}
+
+  return {mapViewModels, mapModels, mapRoutesModels, }
 }

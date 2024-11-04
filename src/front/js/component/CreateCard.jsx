@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import "../../styles/createCard.css";
 
+
 export const CreateCard = () => {
     //--> aqui tenemos que hacerlo dinamico con los modelos
     return (
