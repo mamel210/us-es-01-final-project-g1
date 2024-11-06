@@ -6,12 +6,16 @@ import { useNavigate } from 'react-router-dom'
 import { MdEdit } from "react-icons/md";
 import { Context } from '../../store/appContext.js'
 import "../../../styles/trainingPlans.css"
+import { BannerMessage } from "../../component/BannerMessage.jsx";
+import { formatDate } from "../../helper/formatDate.js";
 
 
 export const TrainingPlans = () => {
   const { store, actions } = useContext(Context)
+
   const { trainingPlansStates } = store
-  const { trainingPlans, isTrainingPlansLoading, filter } = trainingPlansStates
+  const { trainingPlans, isTrainingPlansLoading, filter, currentTrainingPlan } = trainingPlansStates
+
   const [filteredPlans, setFilteredPlans] = useState(() => trainingPlans)
   const navigate = useNavigate()
 
@@ -31,7 +35,12 @@ export const TrainingPlans = () => {
       confirmButtonText: "Yes, delete it!"
     }).then((result) => {
       if (result.isConfirmed) {
-        actions.crudTrainingPlans({ formData: plan, navigate, currentPlanId: store.trainingPlansState.currentTrainingPlan.id, action: "delete" })
+        actions.crudTrainingPlans({
+          formData: plan,
+          navigate,
+          currentPlanId: plan.id,
+          action: "delete"
+        })
         Swal.fire({
           title: "Deleted!",
           text: "Your Training Plan has been deleted.",
@@ -58,6 +67,7 @@ export const TrainingPlans = () => {
     return setFilteredPlans(trainingPlans)
   }
 
+
   useEffect(() => {
     handleFilter()
     const getTP = async () => {
@@ -73,21 +83,22 @@ export const TrainingPlans = () => {
       </div>
     )
   }
-
+  // evaluation, message, variant="warning"
   return (
     <div className={"container mt-2"}>
+      <BannerMessage variant={"info"} message={"Crea tu Session eligiendo un plan de entrenamiento"} evaluation={true} />
       <div className="trainingPlans-header-container">
         <div className="trainingPlans-header-filters">
-          <button className={"btn btn-secondary"} onClick={() => actions.setTrainingPlansFilters("begginer") }>
-            Basico
+          <button className={"btn btn-secondary"} onClick={() => actions.setTrainingPlansFilters("begginer")}>
+            Begginer
           </button>
-          <button className={"btn btn-secondary"} onClick={() => actions.setTrainingPlansFilters("intermediate") }>
+          <button className={"btn btn-secondary"} onClick={() => actions.setTrainingPlansFilters("intermediate")}>
             Intermedio
           </button>
-          <button className={"btn btn-secondary"} onClick={() => actions.setTrainingPlansFilters("advanced") }>
+          <button className={"btn btn-secondary"} onClick={() => actions.setTrainingPlansFilters("advanced")}>
             Avanzado
           </button>
-          <button className={"btn btn-danger"} onClick={() => actions.setTrainingPlansFilters("") }>
+          <button className={"btn btn-danger"} onClick={() => actions.setTrainingPlansFilters("")}>
             Limpiar filtros
           </button>
         </div>
@@ -113,8 +124,8 @@ export const TrainingPlans = () => {
             return (
               <tr>
                 <td>{trainingPlan?.name}</td>
-                <td>{trainingPlan?.registration_date}</td>
-                <td>{trainingPlan?.finalization_date}</td>
+                <td>{formatDate(trainingPlan?.registration_date)}</td>
+                <td>{formatDate(trainingPlan?.finalization_date)}</td>
                 <td>{trainingPlan?.quantity_session}</td>
                 <td>{trainingPlan?.level}</td>
                 <td>

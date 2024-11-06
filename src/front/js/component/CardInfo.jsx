@@ -14,7 +14,7 @@ export const CardInfo = ({ title, subtitle, description, durationTime, model, se
     item_2: setupItems["item_2"],
     item_3: setupItems["item_3"],
   }
-  const { mapViewModels, mapModels, mapRoutesModels } = useModels()
+  const { mapViewModels, mapModels, mapRoutesModels, mapImageModels } = useModels()
 
   const handleViewPlans = () => {
     return actions.setTrainingPlansFilters("")
@@ -27,7 +27,7 @@ export const CardInfo = ({ title, subtitle, description, durationTime, model, se
           className='photo'
           style={{
             backgroundImage:
-              'url(https://images.unsplash.com/photo-1591227174835-d3705c881c90?w=294&dpr=1&h=294&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxjb2xsZWN0aW9uLXRodW1ibmFpbHx8ODMyNTE3MHx8ZW58MHx8fHx8)'
+              `url(${mapImageModels[model]})`
           }}
         ></div>
         <ul className='details'>
@@ -35,19 +35,22 @@ export const CardInfo = ({ title, subtitle, description, durationTime, model, se
             <a href='#'>{mapModels[model]}</a>
           </li>
           <li className='date'>Actualizado, Dec. 24, 2024</li>
-          <li className='tags'>
-            <ul>
-              <li>
-                <Link to={mapRoutesModels[model]} onClick={(e) => items?.item_1.onClick(e)}>Beginners</Link>
-              </li>
-              <li>
-                <Link to={mapRoutesModels[model]} onClick={(e) => items?.item_2.onClick(e)}>Medium</Link>
-              </li>
-              <li>
-                <Link to={mapRoutesModels[model]} onClick={(e) => items?.item_3.onClick(e)}>Expert</Link>
-              </li>
-            </ul>
-          </li>
+          {model === "training_plans" ? (        <li className='tags'>
+              <ul>
+                <li>
+                  <Link to={mapRoutesModels[model]} onClick={(e) => items?.item_1.onClick(e)}>Beginners</Link>
+                </li>
+                <li>
+                  <Link to={mapRoutesModels[model]} onClick={(e) => items?.item_2.onClick(e)}>Medium</Link>
+                </li>
+                <li>
+                  <Link to={mapRoutesModels[model]} onClick={(e) => items?.item_3.onClick(e)}>Expert</Link>
+                </li>
+              </ul>
+            </li>) : (
+    null
+          )}
+
         </ul>
       </div>
       <div className='description'>

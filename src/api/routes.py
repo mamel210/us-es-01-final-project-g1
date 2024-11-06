@@ -71,7 +71,7 @@ def training_plans():
     response_body = {}
     current_user = get_jwt_identity()
     if request.method == 'GET':
-        rows = db.session.execute(db.select(TrainingPlans).where(TrainingPlans.user_id == current_user['user_id'])).scalars()
+        rows = db.session.execute(db.select(TrainingPlans).where(TrainingPlans.user_id == current_user['user_id'], TrainingPlans.is_active == True)).scalars()
         result = [row.serialize() for row in rows]    
         response_body['message'] = 'Listado de Planes de Entrenamiento'
         response_body['results'] = result
@@ -136,7 +136,8 @@ def sessions():
     response_body = {}
     current_user = get_jwt_identity()
     if request.method == 'GET':
-        rows = db.session.execute(db.select(Sessions)).where(Sessions.training_plan_to.user_id == current_user['user_id']).scalars()
+        rows = db.session.execute(db.select(Sessions)).scalars()
+
         result = [row.serialize() for row in rows]    
         response_body['message'] = 'Listado de Sesiones'
         response_body['results'] = result
@@ -147,16 +148,16 @@ def sessions():
         if not plan: 
             response_body['message'] = 'Faltan datos en el request (training_plan_id)'
             return response_body, 400
-        row = db.session.execute(db.select(TrainingPlans).where(TrainingPlans.id == plan))
+        row = db.session.execute(db.select(TrainingPlans).where(TrainingPlans.id == plan)).scalars().first()
         if not row:
             response_body['message'] = 'El Plan no existe'
             return response_body, 400
         if row.user_id != current_user['user_id']:
             response_body['message'] = 'Sin Autorizacion'
             return response_body, 401
-        row = Sessions(date=data.get('date'),
+        session_row = Sessions(date=data.get('date'),
                        training_plan_id=data.get('training_plan_id'))
-        db.session.add(row)
+        db.session.add(session_row)
         db.session.commit()
         response_body['message'] = 'Sesión creada exitosamente'
         response_body['results'] = row.serialize()
@@ -175,7 +176,11 @@ def exercises():
         return response_body, 200
     if request.method == 'POST':
         data = request.json
-        row = Exercises(name=data.get('name'))
+        row = Exercises(name=data.get('name'),
+                        description=data.get('description'),
+                        muscle=data.get('muscle'),
+                        exercise_base=data.get('exercise_base'),
+                        )
         db.session.add(row)
         db.session.commit()
         response_body['message'] = 'Ejercicio creado exitosamente'
@@ -282,6 +287,5 @@ def initial_setup():
 
     response_body["message"] = "Setup Ok"    
     return response_body, 200 
-
 
 
