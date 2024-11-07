@@ -180,7 +180,7 @@ def exercises():
                         description=data.get('description'),
                         muscle=data.get('muscle'),
                         exercise_base=data.get('exercise_base'),
-                        )
+                        category_id=data.get('category_id'))
         db.session.add(row)
         db.session.commit()
         response_body['message'] = 'Ejercicio creado exitosamente'

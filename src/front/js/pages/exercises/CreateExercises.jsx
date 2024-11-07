@@ -19,7 +19,8 @@ export const CreateExercises = () => {
       name,
       description: "algo",
       muscle: "musculitos",
-      exercise_base: "e b"
+      exercise_base: "e b",
+      category_id: 10
     }
     actions.createExercises({ formData, navigate })
   }
