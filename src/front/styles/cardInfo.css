@@ -17,6 +17,11 @@
     z-index: 0;
     max-height: 200px;
     min-height: 200px;
+
+    @media (max-width: 640px) {
+        max-height: 175px;
+        min-height: 175px;
+    }
 }
 
 .blog-card a {

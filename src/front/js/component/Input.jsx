@@ -1,6 +1,5 @@
 import React from 'react'
 
-
 export const Input = ({ id, type, value, onChange, required = true, label }) => {
     return (
         <div className='mb-3'>

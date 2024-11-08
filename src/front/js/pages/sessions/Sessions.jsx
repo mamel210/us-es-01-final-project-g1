@@ -20,12 +20,12 @@ export const Sessions = () => {
     return plan?.name
   }
 
-  useEffect(() => {
-    const getSessions = async () => {
-      actions.getSessions()
-    }
-    getSessions()
-  }, []);
+  // useEffect(() => {
+  //   const getSessions = async () => {
+  //     actions.getSessions()
+  //   }
+  //   getSessions()
+  // }, []);
 
   if (false) {
     return (

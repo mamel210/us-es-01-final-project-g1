@@ -8,3 +8,56 @@
   display: flex;
   gap: 1rem;
 }
+
+.innerTableForm-initialMessage-close,
+.innerTableForm-initialMessage-open {
+  margin: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 8px;
+  border: 1px solid var(--primary);
+  display: flex;
+  align-items: center;
+  place-content: center;
+  font-weight: 500;
+  transition: all 0.3s ease-in-out;
+}
+
+.innerTableForm-initialMessage-close:hover {
+  color: var(--primary);
+  cursor: pointer;
+  box-shadow: 0 0 8px 0 var(--primary);
+}
+
+.innerTableForm-container {
+  margin: 0.5rem;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--primary);
+  box-shadow: 0 0 8px 0 var(--primary);
+  min-width: 250px;
+  transition: all 0.2s ease;
+}
+
+.innerTableForm-label {
+  color: var(--light)
+}
+
+.innerTableForm-close {
+  position: relative;
+
+  svg {
+    position: absolute;
+    right: 0;
+    cursor: pointer;
+    fill: var(--primary);
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+}
+
+.createFormSeriesRepetitionsContainer {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  place-content: space-evenly;
+}

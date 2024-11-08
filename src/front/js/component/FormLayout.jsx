@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 
-export const FormLayout = ({ title, onSubmit, customWidth, actionText, children, adionalActionHint, adionalActionPath, aditionalCallback, adionalActionText, customMessage }) => {
+export const FormLayout = ({ goBackOnClick, title, onSubmit, customWidth, actionText, children, adionalActionHint, adionalActionPath, aditionalCallback, adionalActionText, customMessage }) => {
     return (
         <div className='container-fluid d-flex justify-content-center align-items-center p-0' style={{ height: '100vh' }}>
             <div className='row w-100 h-100 m-0 position-relative'>
@@ -29,9 +29,24 @@ export const FormLayout = ({ title, onSubmit, customWidth, actionText, children,
                         <h2 className='text-center mb-4'>{title}</h2>
                         <form onSubmit={onSubmit}>
                             {children}
-                            <button type='submit' className='btn btn-primary w-100'>
-                                {actionText}
-                            </button>
+                            {goBackOnClick ? (
+                                <div className="row">
+                                    <div className="col-6">
+                                        <button type='button' onClick={goBackOnClick} className='btn btn-secondary w-100'>
+                                            go back!
+                                        </button>
+                                    </div>
+                                    <div className="col-6">
+                                        <button type='submit' className='btn btn-warning w-100'>
+                                            {actionText}
+                                        </button>
+                                    </div>
+                                </div>
+                            ) : (
+                                <button type='submit' className='btn btn-warning w-100'>
+                                    {actionText}
+                                </button>
+                            )}
                             {customMessage ? <div className='text-center mt-3'>{customMessage} </div> : null}
                             {adionalActionText && (
                                 <div className='text-center mt-3'>

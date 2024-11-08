@@ -16,7 +16,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 30px;
+    padding: 0px 30px;
 }
 
 read-more .logo {
@@ -110,4 +110,25 @@ read-more .nav-links a {
         display: flex;
         /* Mostrar cuando es activo */
     }
+}
+
+td {
+    align-content: center;
+}
+
+.navbar-custom-link {
+    color: var(--primary-dark);
+    text-decoration: none;
+    font-size: 21px;
+    font-weight: 600;
+}
+
+.navbar-custom-link-logo {
+    color: var(--primary-dark);
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+}
+
+.navbar-custom-link-logo:hover {
+    transform: scale(1.1);
 }

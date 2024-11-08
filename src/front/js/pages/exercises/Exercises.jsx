@@ -3,26 +3,21 @@ import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import { Context } from '../../store/appContext.js'
 
+
 export const Exercises = () => {
   const { store, actions } = useContext(Context)
   const { exercisesStates, } = store
   const navigate = useNavigate()
-  // exercises
+
   return (
     <div className={"container mt-2"}>
-      <div className="trainingPlans-header-container">
-
-        <div className={""}>
-          <Link to={"/create-exercises"} className={"btn btn-primary"}>
-            Crear Ejercicio
-          </Link>
-        </div>
-      </div>
       <table className="table table-dark table-striped">
         <thead>
           <tr>
-            <th scope="col">Nombre</th>
-            <th scope="col">Descripcion</th>
+            <th scope="col">Name</th>
+            <th scope="col">Category</th>
+            <th scope="col">Muscle</th>
+            <th scope="col">Description</th>
           </tr>
         </thead>
         <tbody>
@@ -30,11 +25,12 @@ export const Exercises = () => {
             return (
               <tr>
                 <td>{exercise.name}</td>
+                <td>{exercise.category_id}</td>
+                <td>{exercise.muscle}</td>
                 <td>{exercise.description}</td>
               </tr>
             )
           }))}
-
 
         </tbody>
       </table>

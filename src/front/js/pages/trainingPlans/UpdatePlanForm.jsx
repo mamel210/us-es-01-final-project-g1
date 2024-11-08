@@ -10,7 +10,6 @@ import { useLevelOptions } from '../../hooks/useLevelOptions.js'
 
 export const UpdatePlanForm = () => {
     const { levelOptions } = useLevelOptions()
-    const user = JSON.parse(localStorage.getItem("user"))
     const { actions, store } = useContext(Context)
     const {trainingPlansStates} = store
     const [name, setName] = useState(trainingPlansStates.currentTrainingPlan.name)
@@ -18,7 +17,11 @@ export const UpdatePlanForm = () => {
     const [finalizationDate, setFinalizationDate] = useState(store.trainingPlansStates.currentTrainingPlan.finalization_date) // definir formato de fechas
     const [quantitySession, setQuantitySession] = useState(store.trainingPlansStates.currentTrainingPlan.quantity_session)
     const [level, setLevel] = useState(levelOptions.find(option => option.value === store.trainingPlansStates.currentTrainingPlan.level)) // 'begginer', 'intermediate', 'advanced',
+    const [exercises, setExercises] = useState([])
     const navigate = useNavigate()
+
+
+
 
     const onEdit = (e) => {
         e.preventDefault()
@@ -30,7 +33,13 @@ export const UpdatePlanForm = () => {
             level: level.value,
             is_active: store.trainingPlansStates.currentTrainingPlan.is_active
         }
-        return actions.crudTrainingPlans({ formData, navigate, currentPlanId: store.trainingPlansStates.currentTrainingPlan.id, action: trainingPlansStates.action })
+        return actions.crudTrainingPlans({ 
+            formData, 
+            navigate, 
+            currentPlanId: store.trainingPlansStates.currentTrainingPlan.id,
+            action: trainingPlansStates.action,
+            exercise_id: exercises
+         })
     }
 
     return (

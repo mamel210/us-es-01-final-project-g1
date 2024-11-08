@@ -16,7 +16,6 @@ import { TrainingPlans } from "./pages/trainingPlans/TrainingPlans.jsx";
 import { CreateSessions } from "./pages/sessions/CreateSessions.jsx";
 import { Sessions } from "./pages/sessions/Sessions.jsx";
 import { Exercises } from "./pages/exercises/Exercises.jsx";
-import { CreateExercises } from "./pages/exercises/CreateExercises.jsx";
 
 
 // Create your first component
@@ -40,7 +39,6 @@ const Layout = () => {
                 <Route element={<Sessions />} path="/sessions" />
                 <Route element={<CreateSessions />} path="/create-sessions" />
                 <Route element={<Exercises />} path="/exercises" />
-                <Route element={<CreateExercises />} path="/create-exercises" />
                 <Route element={<h1>Not found!</h1>} path="*" />
             </Routes>
         </BrowserRouter>
