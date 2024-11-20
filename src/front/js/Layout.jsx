@@ -1,5 +1,5 @@
-import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import React, { useState } from "react";
+import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import injectContext from "./store/appContext";
 // Custom components
 // Custom pages / views
@@ -7,15 +7,18 @@ import injectContext from "./store/appContext";
 import { Login } from "./pages/Login.jsx";
 import { Register } from "./pages/Register.jsx";
 import { Dashboard } from "./pages/Dashboard.jsx";
-import { AboutUs } from "./pages/AboutUs.jsx";
-import { ContactUs } from "./pages/ContactUs.jsx";
-import { Navbar } from "./component/Navbar.jsx";
+import { AboutUs } from "./pages/aboutus/AboutUs.jsx";
+import { CustomNavbar } from "./component/CustomNavbar.jsx";
 import { CreatePlanForm } from "./pages/trainingPlans/CreatePlanForm.jsx";
 import { UpdatePlanForm } from "./pages/trainingPlans/UpdatePlanForm.jsx";
 import { TrainingPlans } from "./pages/trainingPlans/TrainingPlans.jsx";
 import { CreateSessions } from "./pages/sessions/CreateSessions.jsx";
 import { Sessions } from "./pages/sessions/Sessions.jsx";
 import { Exercises } from "./pages/exercises/Exercises.jsx";
+import { Muscles } from "./pages/muscles/Muscles.jsx";
+import { HowItWorks } from "./pages/howitworks/HowItWorks.jsx";
+import { SessionExpiredModal } from "./component/SessionExpiredModal.jsx";
+import { ProtectedRoute } from "./component/ProtectedRoute.jsx";
 
 
 // Create your first component
@@ -26,19 +29,87 @@ const Layout = () => {
 
     return (
         <BrowserRouter basename={basename}>
-            <Navbar />
+            <CustomNavbar />
+            <SessionExpiredModal />
             <Routes>
+                {/* Rutas públicas */}
                 <Route element={<Login />} path="/" />
-                <Route element={<Dashboard />} path="/dashboard" />
                 <Route element={<Register />} path="/register" />
                 <Route element={<AboutUs />} path="/about-us" />
-                <Route element={<ContactUs />} path="/contact-us" />
-                <Route element={<CreatePlanForm />} path="/create-plan" />
-                <Route element={<UpdatePlanForm />} path="/update-plan" />
-                <Route element={<TrainingPlans />} path="/training-plan" />
-                <Route element={<Sessions />} path="/sessions" />
-                <Route element={<CreateSessions />} path="/create-sessions" />
-                <Route element={<Exercises />} path="/exercises" />
+
+                {/* Rutas protegidas */}
+                <Route
+                    element={
+                        <ProtectedRoute>
+                            <Dashboard />
+                        </ProtectedRoute>
+                    }
+                    path="/dashboard"
+                />
+                <Route
+                    element={
+                        <ProtectedRoute>
+                            <TrainingPlans />
+                        </ProtectedRoute>
+                    }
+                    path="/training-plan"
+                />
+                <Route
+                    element={
+                        <ProtectedRoute>
+                            <Sessions />
+                        </ProtectedRoute>
+                    }
+                    path="/sessions"
+                />
+                <Route
+                    element={
+                        <ProtectedRoute>
+                            <CreateSessions />
+                        </ProtectedRoute>
+                    }
+                    path="/create-sessions"
+                />
+                <Route
+                    element={
+                        <ProtectedRoute>
+                            <Exercises />
+                        </ProtectedRoute>
+                    }
+                    path="/exercises"
+                />
+                <Route
+                    element={
+                        <ProtectedRoute>
+                            <Muscles />
+                        </ProtectedRoute>
+                    }
+                    path="/muscles"
+                />
+                <Route
+                    element={
+                        <ProtectedRoute>
+                            <CreatePlanForm />
+                        </ProtectedRoute>
+                    }
+                    path="/create-plan"
+                />
+                <Route
+                    element={
+                        <ProtectedRoute>
+                            <UpdatePlanForm />
+                        </ProtectedRoute>
+                    }
+                    path="/update-plan"
+                />
+                <Route
+                    element={
+                        <ProtectedRoute>
+                            <HowItWorks />
+                        </ProtectedRoute>
+                    }
+                    path="/how-it-works"
+                />
                 <Route element={<h1>Not found!</h1>} path="*" />
             </Routes>
         </BrowserRouter>

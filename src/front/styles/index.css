@@ -1,134 +1,204 @@
 :root {
     --primary: #ff5733;
-    --primary-dark: #2c2b33;
-    --light: #fff;
-    --gray: #d3c7bb;
+    --primary-dark: #d5465c;
+    --primary-light: #ff7f5e;
+    --dark: #252422;
+    --darkness: #403d39;
+    --gray: #ccc5b9;
+    --light: #fffcf2;
+
+    --cta: #4a90e2;
+    --cta-hover: #4178c5;
+    --cta-light: #b3d4f7;
 }
 
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: var(--primary-dark)
-}
-
-.navbar {
-    background-color: var(--primary);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0px 30px;
-}
-
-read-more .logo {
-    color: var(--light);
-    font-size: 24px;
-    font-weight: bold;
-}
-
-.nav-links {
-    list-style: none;
-    display: flex;
-    gap: 20px;
-}
-
-.nav-links li {
-    position: relative;
-}
-
-read-more .nav-links a {
-    color: var(--light);
-    text-decoration: none;
-    font-size: 18px;
-    transition: color 0.3s;
-}
-
-.nav-links a:hover {
-    color: var(--primary-dark);
-    /* Color al pasar el mouse */
-}
-
-.dropdown {
-    position: relative;
-}
-
-.dropbtn {
-    background: none;
-    border: none;
-    color: var(--light);
-    font-size: 18px;
-    cursor: pointer;
-}
-
-.dropdown-content {
-    display: block;
-    position: absolute;
-    background-color: #444;
-    min-width: 160px;
-    z-index: 1;
-}
-
-.dropdown-content a {
-    color: var(--light);
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-}
-
-.dropdown-content a:hover {
-    background-color: var(--primary);
-}
-
-/* Estilo del botón de llamada a la acción */
-.cta-button {
-    background-color: var(--primary-dark);
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.cta-button:hover {
-    background-color: #ff7a47;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .nav-links {
-        flex-direction: column;
-        position: absolute;
-        background-color: var(--primary-dark);
-        top: 60px;
-        right: 0;
-        width: 100%;
-        display: none;
-        /* Oculto por defecto */
-    }
-
-    .nav-links.active {
-        display: flex;
-        /* Mostrar cuando es activo */
-    }
+    background: linear-gradient(to right, #333333, var(--dark));
+    text-rendering: optimizeLegibility;
 }
 
 td {
     align-content: center;
 }
 
+
+.btn-info {
+    padding: .25rem .5rem;
+    font-size: .875rem;
+    border-radius: .2rem;
+    background-color: var(--primary);
+    color: var(--light);
+    border: none;
+    border-color: var(--primary);
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.2s ease;
+}
+
+.btn-info:hover {
+    background-color: var(--primary-light);
+    border-color: var(--primary-dark);
+    color: var(--light);
+}
+
+.btn-info:focus,
+.btn-info.focus {
+    background-color: var(--primary-light);
+    border-color: var(--primary-light);
+    color: var(--light);
+    box-shadow: 0 0 0 0.2rem rgba(74, 144, 226, 0.5);
+}
+
+.btn-info:active,
+.btn-info.active {
+    background-color: var(--primary-light);
+    border-color: var(--primary-light);
+    color: var(--light);
+}
+
+.btn-info:active:focus,
+.btn-info.active:focus {
+    box-shadow: 0 0 0 0.2rem rgba(179, 212, 247, 0.5);
+}
+
+.btn-info.disabled,
+.btn-info:disabled {
+    background-color: var(--gray);
+    border-color: var(--gray);
+    color: var(--dark);
+}
+
+
+
+.logInLogOut-button {
+    background-color: var(--primary-light);
+    color: var(--light);
+    border: none;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin: 1rem 0;
+}
+
+.logInLogOut-button:hover {
+    background-color: var(--primary-dark);
+}
+
+.logInLogOut:hover {
+    background-color: var(--primary-dark);
+    border-color: var(--gray);
+    color: var(--light);
+}
+
+.logInLogOut:focus,
+.logInLogOut.focus {
+    background-color: var(--primary--dark);
+    border-color: var(--cta-light);
+    color: var(--light);
+    box-shadow: 0 0 0 0.2rem rgb(255, 127, 94, 0.5);
+}
+
+
 .navbar-custom-link {
-    color: var(--primary-dark);
+    color: var(--primary--dark);
     text-decoration: none;
-    font-size: 21px;
+    font-size: 18px;
     font-weight: 600;
 }
 
 .navbar-custom-link-logo {
-    color: var(--primary-dark);
+    color: var(--dark);
     text-decoration: none;
     transition: all 0.3s ease-in-out;
 }
 
 .navbar-custom-link-logo:hover {
     transform: scale(1.1);
+}
+
+
+/* Animación de entrada */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Animación de salida */
+@keyframes slideOutDown {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+}
+
+.modal-content.slide-in {
+    animation: slideInUp 0.3s ease-in-out;
+}
+
+.modal-content.slide-out {
+    animation: slideOutDown 0.3s ease-in-out;
+}
+
+.common-title {
+    border-bottom: 1px solid var(--primary);
+    color: var(--light);
+    margin-bottom: 0.5rem;
+    text-align: end;
+    font-size: xx-large;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.noRecords-container {
+    background-color: var(--primary-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5%;
+    border-radius: 12px;
+}
+
+.noRecords-container-icon {
+    margin: 0 1rem;
+    font-size: 1.75rem;
+
+    svg {
+        fill: var(--light)
+    }
+}
+
+.noRecords-container-text {
+    font-size: 2rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+.expandable-text {
+    transition: max-height 0.3s ease;
+    overflow: hidden;
+    max-height: 4.5em;
+}
+
+.expandable-text.expanded {
+    max-height: none;
 }

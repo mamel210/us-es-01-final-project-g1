@@ -2,7 +2,7 @@
   position: relative;
   z-index: 10;
   color: #ffffff;
-  background: linear-gradient(to right, var(--primary-dark), var(--gray));
+  background: linear-gradient(to right, var(--darkness), var(--gray));
   border-radius: 8px;
   position: relative;
   overflow: hidden;
@@ -27,6 +27,6 @@
   right: -24px;
   width: 8rem;
   height: 8rem;
-  color: var(--primary-dark);
+  color: var(dark);
   opacity: 0.5;
 }

@@ -1,0 +1,12 @@
+.avatar-images {
+    width: 150px;
+    height: 150px;
+}
+
+.image-skeleton {
+    width: 150px;
+    height: 150px;
+    background-color: var(--gray);
+    border-radius: 50%;
+    flex-shrink: 0;
+}
